@@ -12,9 +12,11 @@ ENV MONITORRENT_DEBUG=false
 ENV MONITORRENT_IP=0.0.0.0
 ENV MONITORRENT_PORT=6687
 ENV MONITORRENT_DB_PATH=monitorrent.db
+ENV MONITORRENT_UID=1000
+ENV MONITORRENT_GID=1000
 
 #Adding user app
-RUN adduser -D -u 1000 app
+RUN adduser -D -u $MONITORRENT_UID -g $MONITORRENT_GID app
 RUN mkdir /app
 
 #Downloading archive with app
