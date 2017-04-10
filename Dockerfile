@@ -11,13 +11,13 @@ ENV MONITORRENT_VERSION="1.1.2"
 ENV MONITORRENT_DEBUG=false
 ENV MONITORRENT_IP=0.0.0.0
 ENV MONITORRENT_PORT=6687
-ENV MONITORRENT_DB_PATH=monitorrent.db
+ENV MONITORRENT_DB_PATH=/app/settings/monitorrent.db
 ENV MONITORRENT_UID=1000
 ENV MONITORRENT_GID=1000
 
 #Adding user app
 RUN adduser -D -u $MONITORRENT_UID -g $MONITORRENT_GID app
-RUN mkdir /app
+RUN mkdir -p /app/settings
 
 #Downloading archive with app
 RUN wget https://github.com/werwolfby/monitorrent/releases/download/$MONITORRENT_VERSION/monitorrent-$MONITORRENT_VERSION.zip -O /tmp/monitorrent.zip --no-check-certificate
