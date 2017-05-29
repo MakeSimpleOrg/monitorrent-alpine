@@ -8,16 +8,13 @@ RUN apk add --no-cache python3 wget unzip && \
     rm -r /root/.cache
 
 #Variables by default
-ENV MONITORRENT_VERSION="1.1.2"
 ENV MONITORRENT_DEBUG=false
 ENV MONITORRENT_IP=0.0.0.0
 ENV MONITORRENT_PORT=6687
 ENV MONITORRENT_DB_PATH=/app/settings/monitorrent.db
-ENV MONITORRENT_UID=1000
-ENV MONITORRENT_GID=1000
 
 #Adding user app
-RUN adduser -D -u $MONITORRENT_UID -g $MONITORRENT_GID app
+RUN addgroup -S app && adduser -S -g app app
 RUN mkdir -p /app/settings
 
 #Downloading archive with app
@@ -28,6 +25,9 @@ RUN unzip -d /app/ /tmp/monitorrent.zip
 
 #Changing work dir
 WORKDIR /app
+
+#Use port
+EXPOSE $MONITORRENT_PORT
 
 #Installing depencies
 RUN pip3 install -r requirements.txt
