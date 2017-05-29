@@ -4,6 +4,7 @@ RUN apk add --no-cache python3 wget unzip && \
     python3 -m ensurepip && \
     rm -r /usr/lib/python*/ensurepip && \
     pip3 install --upgrade pip setuptools && \
+    if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi && \
     rm -r /root/.cache
 
 #Variables by default
@@ -20,7 +21,8 @@ RUN adduser -D -u $MONITORRENT_UID -g $MONITORRENT_GID app
 RUN mkdir -p /app/settings
 
 #Downloading archive with app
-RUN wget https://github.com/werwolfby/monitorrent/releases/download/$MONITORRENT_VERSION/monitorrent-$MONITORRENT_VERSION.zip -O /tmp/monitorrent.zip --no-check-certificate
+#RUN wget https://github.com/werwolfby/monitorrent/releases/download/$MONITORRENT_VERSION/monitorrent-$MONITORRENT_VERSION.zip -O /tmp/monitorrent.zip --no-check-certificate
+RUN wget https://github.com/$(wget https://github.com/werwolfby/monitorrent/releases/latest -O - --no-check-certificate | egrep '/.*/.*/.*zip' -o) -O /tmp/monitorrent.zip --no-check-certificate
 
 #Unzipping
 RUN unzip -d /app/ /tmp/monitorrent.zip
@@ -29,7 +31,7 @@ RUN unzip -d /app/ /tmp/monitorrent.zip
 WORKDIR /app
 
 #Installing depencies
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 RUN rm requirements.txt
 RUN apk del wget unzip
 RUN rm -r /tmp/*
