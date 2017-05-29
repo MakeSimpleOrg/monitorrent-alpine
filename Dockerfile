@@ -21,8 +21,7 @@ RUN adduser -D -u $MONITORRENT_UID -g $MONITORRENT_GID app
 RUN mkdir -p /app/settings
 
 #Downloading archive with app
-#RUN wget https://github.com/werwolfby/monitorrent/releases/download/$MONITORRENT_VERSION/monitorrent-$MONITORRENT_VERSION.zip -O /tmp/monitorrent.zip --no-check-certificate
-RUN wget https://github.com/$(wget https://github.com/werwolfby/monitorrent/releases/latest -O - --no-check-certificate | egrep '/.*/.*/.*zip' -o) -O /tmp/monitorrent.zip --no-check-certificate
+RUN wget https://github.com/$(wget https://github.com/werwolfby/monitorrent/releases/latest -O - --no-check-certificate | egrep '/.*/.*/monitorrent.*zip' -o) -O /tmp/monitorrent.zip --no-check-certificate
 
 #Unzipping
 RUN unzip -d /app/ /tmp/monitorrent.zip
