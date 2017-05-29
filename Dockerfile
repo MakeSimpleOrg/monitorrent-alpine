@@ -28,7 +28,6 @@ WORKDIR /app
 
 #Use port
 EXPOSE 6687
-VOLUME /app/settings/monitorrent.db
 
 #Installing depencies
 RUN pip3 install -r requirements.txt
