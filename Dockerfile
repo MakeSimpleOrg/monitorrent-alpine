@@ -27,7 +27,8 @@ RUN unzip -d /app/ /tmp/monitorrent.zip
 WORKDIR /app
 
 #Use port
-EXPOSE $MONITORRENT_PORT
+EXPOSE 6687
+VOLUME /app/settings/monitorrent.db
 
 #Installing depencies
 RUN pip3 install -r requirements.txt
